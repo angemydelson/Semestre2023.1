@@ -3,8 +3,8 @@
  *
  * GEN254 - Grafos - 2023/1
  *
- * Nome:      XXXX
- * Matricula: XXXX
+ * Nome:      Angemydelson Saint Bert
+ * Matricula: 2121101002
  */
 
 #include "Aresta.h"
