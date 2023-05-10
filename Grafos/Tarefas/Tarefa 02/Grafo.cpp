@@ -48,21 +48,84 @@ void Grafo::imprime() {
     }
 }
 
-bool Grafo::eh_caminho(Aresta e, int marcado[]){
-    if (e.v1 == e.v2){
-        cout << e.v1 <<"-";
+bool Grafo::eh_caminho(int v, int w, int marcado[]) {
+    if (v == w) {
+        cout << v << "-";
         return true;
     }
-    marcado[e.v1] = 1;
-    for( auto u = 0; u < num_vertices_; u++){
-        if (matriz_adj_[e.v1][e.v2] != 0){
-            if (marcado[u] == 0){
-                if (eh_caminho(e.v1, e.v2, marcado)){
-                    cout << e.v1 <<"-";
+    marcado[v] = 1;
+    for (auto u = 0; u < num_vertices_; u++) {
+        if (matriz_adj_[v][u] != 0) {
+            if (marcado[u] == 0) {
+                if (eh_caminho(u, w, marcado)) {
+                    cout << v << "-";
                     return true;
                 }
             } 
         }
     }
+    return false;
+}
+
+bool Grafo::existe_caminho(int v, int w) {
+    int num_vertices_ = num_vertices();
+    int marcado[num_vertices_];
+    for (auto i = 0; i < num_vertices_; i++) {
+        marcado[i] = 0;
+    }
+    return eh_caminho(v, w, marcado);
+}
+
+bool Grafo::eh_conexo() {
+    int num_vertices_ = num_vertices();
+    int marcado[num_vertices_];
+    // int marcado[];
+    for (auto i = 0; i < num_vertices_; i++) {
+        marcado[i] = 0;
+    }
+
+    for (auto v = 0; v < num_vertices_; v++) {
+        if (marcado[v] == 0) {
+            if (!eh_caminho(0, v, marcado)) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool Grafo::eh_aciclico() {
+    int num_vertices_ = num_vertices();
+    int marcado[num_vertices_];
+    for (auto i = 0; i < num_vertices_; i++) {
+        marcado[i] = 0;
+    }
+
+    for (auto v = 0; v < num_vertices_; v++) {
+        if (marcado[v] == 0) {
+            if (eh_um_grafo_aciclico(v, marcado)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Grafo::eh_um_grafo_aciclico(int v, int marcado[]) {
+    marcado[v] = 1;
+    int num_vertices_ = num_vertices();
+    for (auto u = 0; u < num_vertices_; u++) {
+        if (matriz_adj_[v][u] != 0) {
+            if (marcado[u] == 0) {
+                if (eh_um_grafo_aciclico(u, marcado)) {
+                    return true;
+                }
+            } else if (marcado[u] == 1) {
+                return true;
+            }
+        }
+    }
+
+    marcado[v] = 2;
     return false;
 }
