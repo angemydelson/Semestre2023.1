@@ -48,7 +48,18 @@ void Grafo::imprime() {
     }
 }
 
-bool Grafo::eh_caminho(int v, int w, int marcado[]) {
+bool Grafo::eh_caminho(int n, int seq[]) {
+    int marcado[num_vertices_];
+    for (auto i = 0; i < num_vertices_; i++) {
+        marcado[i] = 0;
+    }
+
+    // Falta
+
+
+}
+
+bool Grafo::caminho(int v, int w, int marcado[]) {
     if (v == w) {
         cout << v << "-";
         return true;
@@ -57,7 +68,7 @@ bool Grafo::eh_caminho(int v, int w, int marcado[]) {
     for (auto u = 0; u < num_vertices_; u++) {
         if (matriz_adj_[v][u] != 0) {
             if (marcado[u] == 0) {
-                if (eh_caminho(u, w, marcado)) {
+                if (caminho(u, w, marcado)) {
                     cout << v << "-";
                     return true;
                 }
@@ -73,7 +84,7 @@ bool Grafo::existe_caminho(int v, int w) {
     for (auto i = 0; i < num_vertices_; i++) {
         marcado[i] = 0;
     }
-    return eh_caminho(v, w, marcado);
+    return caminho(v, w, marcado);
 }
 
 bool Grafo::eh_conexo() {
@@ -86,7 +97,7 @@ bool Grafo::eh_conexo() {
 
     for (auto v = 0; v < num_vertices_; v++) {
         if (marcado[v] == 0) {
-            if (!eh_caminho(0, v, marcado)) {
+            if (!caminho(0, v, marcado)) {
                 return false;
             }
         }

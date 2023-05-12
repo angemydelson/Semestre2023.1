@@ -9,7 +9,7 @@ public:
     void insere_aresta(Aresta e);
     void remove_aresta(Aresta e);
     void imprime();
-    bool eh_caminho(int n, int seq[]);
+    bool eh_caminho(std::vector<int> sequencia);
     bool caminho(int v, int w, int marcado[]);
     bool existe_caminho(int v, int w);
     bool eh_conexo();
